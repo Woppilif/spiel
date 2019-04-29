@@ -155,14 +155,14 @@ def silently(lam):
     except BaseException as e:
         print("Got silenced Exception: "+e)
 
-'''
+
 def cleanup():
-    silently(lambda _:sp.pause_playback(device_id))
+    #silently(lambda _:sp.pause_playback(device_id))
     global run
     run = False
     silently(lambda _:wrapper._reset())
     sys.exit()
-'''
+
 # todo: read once
 
 #todo: rm, use request
@@ -203,7 +203,7 @@ def parse_records(octets):
     else:
         return records
 
-'''
+
 def prepareOnce():
     signal.signal(signal.SIGINT, end_read)
     print("Starting")
@@ -211,6 +211,7 @@ def prepareOnce():
     
     run = True
     sp = None
+    '''
     device_id = os.environ["DEVICE_ID"]
     while sp == None:
         try:
@@ -218,12 +219,13 @@ def prepareOnce():
         except BaseException:
             traceback.print_exc(file=sys.stdout)
             time.sleep(2)
-'''
+    '''
+
 
 try:
-    #prepareOnce()
+    prepareOnce()
     wrapper = RFIDWrapper()
-    while True:
+    while run:
         print("Running")
 
         try:
@@ -270,4 +272,4 @@ except BaseException as e:
     traceback.print_exc(file=sys.stdout)
 finally:
     print("STOP")
-    #cleanup()
+    cleanup()
