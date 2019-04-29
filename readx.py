@@ -49,16 +49,20 @@ class RFIDWrapper:
         
         def read_block(block_address):
             (error, read) = self.rdr.read(block_address)
+            
             if error: 
+                print('READ B {0}'.format(error))
                 raise Exception("failed to read block %s" % block_address)
             else:
                 return bytes(read)
 
         try:
             (error, uid) = self._prepare_request()
+            print('PREP B {0}'.format(error))
             if error: raise Exception("failed to prepare request")
 
             error = self.rdr.card_auth(self.rdr.auth_b, 4, self.KEY, uid)
+            print('AUTH {0}'.format(error))
             if error: raise Exception("failed to auth sector 1")
             
             start_block = 4
